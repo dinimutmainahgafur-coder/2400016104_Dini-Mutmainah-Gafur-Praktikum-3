@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <title>To-Do App</title>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+
+            .container {
+                width: 350px;
+                margin: 0 auto;
+            }
+
+            .input-section {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+            }
+
+            input[type="text"] {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                box-sizing: border-box;
+            }
+
+            button {
+                padding: 10px;
+            }
+
+            #tasklist {
+                list-style: none;
+                padding: 0;
+            }
+
+            #tasklist li {
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .close {
+                color: red;
+                float: right;
+                cursor: pointer;
+                margin-left: 10px;
+            }
+
+            .edit {
+                color: blue;
+                float: right;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container">
+             <h2>My To-Do List</h2>
+
+             <div class="input-section">
+                 <input type="text" id="newTask" placeholder="Add a new task...">
+                 <button onclick="addTask()">Add</button>
+             </div>
+
+             <ul id="tasklist"></ul>
+        </div>
+
+        <script>
+            function addTask() {
+                let input = document.getElementById("newTask").value.trim();
+                const task = document.getElementById("tasklist");
+                
+                if (input === "") {
+                    alert("Please enter a task!");
+                    return;
+                }
+
+                task.innerHTML += `
+                <li>
+                    ${input} 
+                    <span class="close" onclick="deleteTask(this)">Hapus</span>
+                    <span class="edit" onclick="editTask(this)">Edit</span>
+                </li>`;
+                
+                document.getElementById("newTask").value = "";
+            }
+
+            function deleteTask(element) {
+                element.parentElement.remove();
+            }
+
+            function editTask(element) {
+                let li = element.parentElement;
+                let currentText = li.childNodes[0].textContent.trim();
+                let newText = prompt("Edit your task:", currentText);
+                if (newText !== null && newText.trim() !== "") {
+                    li.childNodes[0].textContent = newText;
+                }
+            }
+        </script>
+
+</body>
+</html>
